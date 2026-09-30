@@ -35,6 +35,35 @@ services:
       - "8083:8080"
     volumes:
       - roach4-data:/cockroach/cockroach-data
+  init:
+    image: cockroachdb/cockroach:v24.3.0
+    depends_on:
+      - roach1
+      - roach2
+      - roach3
+      - roach4
+    volumes:
+      - ./sql:/sql:ro
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        H="--insecure --host=roach1:26257"
+        echo "Attente et initialisation du cluster..."
+        until ./cockroach init $$H > /tmp/init.log 2>&1 || grep -q "already been initialized" /tmp/init.log; do sleep 2; done
+        echo "Attente des 4 noeuds..."
+        until [ "$$(./cockroach node status $$H --format=csv | wc -l)" -ge 5 ]; do sleep 2; done
+        set -e
+        if ./cockroach sql $$H --format=csv -e "SHOW DATABASES" | grep -q globalshop; then
+          echo "Base globalshop deja presente : rien a faire."
+        else
+          echo "Creation du schema, du partitionnement et des donnees..."
+          ./cockroach sql $$H < /sql/schema.sql
+          ./cockroach sql $$H < /sql/placement_produits.sql
+          ./cockroach sql $$H < /sql/placement_autres.sql
+          ./cockroach sql $$H < /sql/seed.sql
+        fi
+        echo "Initialisation terminee."    
 
 volumes:
   roach1-data:

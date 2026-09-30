@@ -1,3 +1,4 @@
+ALTER TABLE globalshop.produits PARTITION BY LIST (region) (PARTITION afrique VALUES IN ('afrique'), PARTITION europe VALUES IN ('europe'), PARTITION amerique VALUES IN ('amerique'), PARTITION asie VALUES IN ('asie'));
 ALTER PARTITION afrique OF TABLE globalshop.produits CONFIGURE ZONE USING
   num_replicas = 3, constraints = '{"+region=afrique": 1}', lease_preferences = '[[+region=afrique]]';
 
