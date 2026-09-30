@@ -1,0 +1,43 @@
+services:
+  roach1:
+    image: cockroachdb/cockroach:v24.3.0
+    hostname: roach1
+    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach1 --locality=region=afrique --cache=.2 --max-sql-memory=.2
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    volumes:
+      - roach1-data:/cockroach/cockroach-data
+
+  roach2:
+    image: cockroachdb/cockroach:v24.3.0
+    hostname: roach2
+    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach2 --locality=region=europe --cache=.2 --max-sql-memory=.2
+    ports:
+      - "8081:8080"
+    volumes:
+      - roach2-data:/cockroach/cockroach-data
+
+  roach3:
+    image: cockroachdb/cockroach:v24.3.0
+    hostname: roach3
+    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach3 --locality=region=amerique --cache=.2 --max-sql-memory=.2
+    ports:
+      - "8082:8080"
+    volumes:
+      - roach3-data:/cockroach/cockroach-data
+
+  roach4:
+    image: cockroachdb/cockroach:v24.3.0
+    hostname: roach4
+    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach4 --locality=region=asie --cache=.2 --max-sql-memory=.2
+    ports:
+      - "8083:8080"
+    volumes:
+      - roach4-data:/cockroach/cockroach-data
+
+volumes:
+  roach1-data:
+  roach2-data:
+  roach3-data:
+  roach4-data:
