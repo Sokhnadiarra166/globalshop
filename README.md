@@ -9,8 +9,27 @@ Cluster CockroachDB de 4 nœuds (Afrique, Europe, Amérique, Asie), partitionné
 - Python 3 et `pip install psycopg2-binary` (pour les tests)
 
 ## Démarrage
-docker compose up -d
-(étapes d'initialisation à compléter une fois automatisées)
+## Démarrage
+
+Prérequis : Docker Desktop lancé.
+
+    git clone https://github.com/Sokhnadiarra166/globalshop.git
+    cd globalshop
+    docker compose up -d
+
+Attendre environ 2 minutes, puis vérifier :
+
+    docker compose logs init
+
+Le message "Initialisation terminee." confirme que le cluster, le schéma, le partitionnement et les données de test sont en place.
+
+Interface web CockroachDB : http://localhost:8080
+
+## Arrêt et reprise
+
+    docker compose stop      # arrêt sans perte de données
+    docker compose up -d     # reprise
+    docker compose down -v   # repart de zéro (efface les données)
 
 ## Structure du dépôt
 - docker-compose.yml : le cluster
