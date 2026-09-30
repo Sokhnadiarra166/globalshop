@@ -4,7 +4,6 @@ services:
     hostname: roach1
     command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach1 --locality=region=afrique --cache=.2 --max-sql-memory=.2
     ports:
-      - "26257:26257"
       - "8080:8080"
     volumes:
       - roach1-data:/cockroach/cockroach-data
@@ -63,7 +62,19 @@ services:
           ./cockroach sql $$H < /sql/placement_autres.sql
           ./cockroach sql $$H < /sql/seed.sql
         fi
-        echo "Initialisation terminee."    
+        echo "Initialisation terminee."   
+  haproxy:
+    image: haproxy:2.9
+    depends_on:
+      - roach1
+      - roach2
+      - roach3
+      - roach4
+    ports:
+      - "26257:26257"
+      - "8404:8404"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro       
 
 volumes:
   roach1-data:
