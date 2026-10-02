@@ -33,6 +33,7 @@ def executer_transaction(conn, travail, max_reessais=MAX_REESSAIS):
     Si CockroachDB signale un conflit (code 40001), la transaction est annulée
     puis rejouée depuis le début, après une courte attente aléatoire.
     Retourne (résultat, nombre_de_réessais).
+    En cas d'échec définitif, l'exception levée porte l'attribut `reessais`.
     """
     reessais = 0
     while True:
@@ -41,14 +42,15 @@ def executer_transaction(conn, travail, max_reessais=MAX_REESSAIS):
                 resultat = travail(cur)
             conn.commit()
             return resultat, reessais
-        except psycopg2.Error as e:
+        except Exception as e:
             _annuler(conn)
-            if getattr(e, "pgcode", None) != CODE_CONFLIT or reessais >= max_reessais:
-                raise
-            reessais += 1
-            time.sleep(random.uniform(0, min(1.0, 0.05 * 2 ** reessais)))
-        except Exception:
-            _annuler(conn)
+            conflit = (isinstance(e, psycopg2.Error)
+                       and getattr(e, "pgcode", None) == CODE_CONFLIT)
+            if conflit and reessais < max_reessais:
+                reessais += 1
+                time.sleep(random.uniform(0, min(1.0, 0.05 * 2 ** reessais)))
+                continue
+            e.reessais = reessais
             raise
 
 

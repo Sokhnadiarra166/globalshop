@@ -1,0 +1,76 @@
+{
+  "parametres": {
+    "acheteurs": 100,
+    "stock": 10,
+    "quantite": 1,
+    "region_produit": "afrique",
+    "region_client": "europe",
+    "mode": "normal",
+    "garder": false
+  },
+  "acheteurs": {
+    "succes": 10,
+    "refus": 90,
+    "erreurs": 0,
+    "connexions_impossibles": 0
+  },
+  "performances": {
+    "duree_s": 8.599,
+    "debit_rps": 11.6,
+    "ms_min": 901,
+    "ms_median": 7671,
+    "ms_p95": 8418,
+    "ms_max": 8597,
+    "reessais_total": 440,
+    "acheteurs_avec_reessai": 97
+  },
+  "base": {
+    "stock_final": 0,
+    "commandes": 10,
+    "factures": 10,
+    "montant": "250.00"
+  },
+  "integrite_garantie": true,
+  "controles": [
+    {
+      "nom": "Aucune survente",
+      "ok": true,
+      "detail": "10 vendus pour un stock de 10"
+    },
+    {
+      "nom": "Stock final cohérent avec les ventes",
+      "ok": true,
+      "detail": "0 (attendu 0)"
+    },
+    {
+      "nom": "Commandes enregistrées = commandes acceptées",
+      "ok": true,
+      "detail": "10 en base, 10 acceptées"
+    },
+    {
+      "nom": "Factures = commandes",
+      "ok": true,
+      "detail": "10 (attendu 10)"
+    },
+    {
+      "nom": "Montant facturé correct",
+      "ok": true,
+      "detail": "250.00 (attendu 250.00)"
+    },
+    {
+      "nom": "Commandes acceptées = stock disponible",
+      "ok": true,
+      "detail": "10 (attendu 10)"
+    },
+    {
+      "nom": "Refus = acheteurs - acceptées",
+      "ok": true,
+      "detail": "90 (attendu 90)"
+    },
+    {
+      "nom": "Aucune erreur technique",
+      "ok": true,
+      "detail": "0"
+    }
+  ]
+}
