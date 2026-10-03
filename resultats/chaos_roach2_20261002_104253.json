@@ -1,0 +1,71 @@
+{
+  "parametres": {
+    "noeuds": "roach2",
+    "ouvriers": 16,
+    "duree": 70,
+    "kill_a": 15,
+    "redemarrer_a": 45,
+    "sans_redemarrage": true,
+    "produits_par_region": 8,
+    "garder": false
+  },
+  "evenements": [
+    {
+      "t": 23.5,
+      "evenement": "PANNE roach2"
+    }
+  ],
+  "clients": {
+    "confirmees": 1781,
+    "rejouees": 6,
+    "deja_enregistrees": 3,
+    "abandonnees": 0,
+    "erreurs_vues": 6,
+    "types_erreurs": {
+      "OperationalError  server closed the connection unexpectedly": 4,
+      "StatementCompletionUnknown 40003 result is ambiguous: error=failed to connect to n3 at roach2:26257: in": 2
+    }
+  },
+  "disponibilite": {
+    "debit_avant": 27.1,
+    "debit_pendant": 24.7,
+    "debit_apres": null,
+    "interruption_max_s": 3.5,
+    "retour_4_noeuds_s": null
+  },
+  "base": {
+    "commandes": 1781,
+    "factures": 1781,
+    "quantite_vendue": 1781,
+    "montant": "44525.00",
+    "jamais_confirmees": 0
+  },
+  "integrite_garantie": true,
+  "controles": [
+    {
+      "nom": "Aucune commande confirmée n'a été perdue",
+      "ok": true,
+      "detail": "0 perdue(s) sur 1781 confirmées"
+    },
+    {
+      "nom": "Stock cohérent avec les ventes (aucune survente)",
+      "ok": true,
+      "detail": "1781 unités retirées du stock, 1781 vendues"
+    },
+    {
+      "nom": "Commandes = factures",
+      "ok": true,
+      "detail": "1781 commandes, 1781 factures"
+    },
+    {
+      "nom": "Montant facturé correct",
+      "ok": true,
+      "detail": "44525.00 (attendu 44525.00)"
+    },
+    {
+      "nom": "Stock jamais négatif",
+      "ok": true,
+      "detail": "minimum 99927"
+    }
+  ]
+}

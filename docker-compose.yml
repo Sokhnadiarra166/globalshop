@@ -1,8 +1,9 @@
 services:
+
   roach1:
     image: cockroachdb/cockroach:v24.3.0
     hostname: roach1
-    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach1 --locality=region=afrique --cache=.2 --max-sql-memory=.2
+    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach1 --locality=region=afrique --max-offset=2000ms --cache=.2 --max-sql-memory=.2
     ports:
       - "8080:8080"
     volumes:
@@ -11,7 +12,7 @@ services:
   roach2:
     image: cockroachdb/cockroach:v24.3.0
     hostname: roach2
-    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach2 --locality=region=europe --cache=.2 --max-sql-memory=.2
+    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach2 --locality=region=europe --max-offset=2000ms --cache=.2 --max-sql-memory=.2
     ports:
       - "8081:8080"
     volumes:
@@ -20,7 +21,7 @@ services:
   roach3:
     image: cockroachdb/cockroach:v24.3.0
     hostname: roach3
-    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach3 --locality=region=amerique --cache=.2 --max-sql-memory=.2
+    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach3 --locality=region=amerique --max-offset=2000ms --cache=.2 --max-sql-memory=.2
     ports:
       - "8082:8080"
     volumes:
@@ -29,11 +30,12 @@ services:
   roach4:
     image: cockroachdb/cockroach:v24.3.0
     hostname: roach4
-    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach4 --locality=region=asie --cache=.2 --max-sql-memory=.2
+    command: start --insecure --join=roach1,roach2,roach3,roach4 --advertise-addr=roach4 --locality=region=asie --max-offset=2000ms --cache=.2 --max-sql-memory=.2
     ports:
       - "8083:8080"
     volumes:
       - roach4-data:/cockroach/cockroach-data
+
   init:
     image: cockroachdb/cockroach:v24.3.0
     depends_on:
@@ -48,21 +50,34 @@ services:
     command:
       - |
         H="--insecure --host=roach1:26257"
+
         echo "Attente et initialisation du cluster..."
-        until ./cockroach init $$H > /tmp/init.log 2>&1 || grep -q "already been initialized" /tmp/init.log; do sleep 2; done
+
+        until ./cockroach init $$H > /tmp/init.log 2>&1 || grep -q "already been initialized" /tmp/init.log; do
+          sleep 2
+        done
+
         echo "Attente des 4 noeuds..."
-        until [ "$$(./cockroach node status $$H --format=csv | wc -l)" -ge 5 ]; do sleep 2; done
+
+        until [ "$$(./cockroach node status $$H --format=csv | wc -l)" -ge 5 ]; do
+          sleep 2
+        done
+
         set -e
+
         if ./cockroach sql $$H --format=csv -e "SHOW DATABASES" | grep -q globalshop; then
           echo "Base globalshop deja presente : rien a faire."
         else
           echo "Creation du schema, du partitionnement et des donnees..."
+
           ./cockroach sql $$H < /sql/schema.sql
           ./cockroach sql $$H < /sql/placement_produits.sql
           ./cockroach sql $$H < /sql/placement_autres.sql
           ./cockroach sql $$H < /sql/seed.sql
         fi
-        echo "Initialisation terminee."   
+
+        echo "Initialisation terminee."
+
   haproxy:
     image: haproxy:2.9
     depends_on:
@@ -74,7 +89,7 @@ services:
       - "26257:26257"
       - "8404:8404"
     volumes:
-      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro       
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
 
 volumes:
   roach1-data:
