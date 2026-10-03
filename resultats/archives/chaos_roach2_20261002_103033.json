@@ -1,0 +1,75 @@
+{
+  "parametres": {
+    "noeuds": "roach2",
+    "ouvriers": 16,
+    "duree": 100,
+    "kill_a": 20,
+    "redemarrer_a": 70,
+    "sans_redemarrage": false,
+    "produits_par_region": 8,
+    "garder": false
+  },
+  "evenements": [
+    {
+      "t": 26.4,
+      "evenement": "PANNE roach2"
+    },
+    {
+      "t": 81.3,
+      "evenement": "RETOUR roach2"
+    }
+  ],
+  "clients": {
+    "confirmees": 4105,
+    "rejouees": 4,
+    "deja_enregistrees": 1,
+    "abandonnees": 0,
+    "erreurs_vues": 5,
+    "types_erreurs": {
+      "OperationalError  server closed the connection unexpectedly": 4,
+      "OperationalError  connection to server at \"localhost\" (::1), port 26257 failed: timeout": 1
+    }
+  },
+  "disponibilite": {
+    "debit_avant": 24.2,
+    "debit_pendant": 50.8,
+    "debit_apres": 35.5,
+    "interruption_max_s": 5.2,
+    "retour_4_noeuds_s": null
+  },
+  "base": {
+    "commandes": 4105,
+    "factures": 4105,
+    "quantite_vendue": 4105,
+    "montant": "102625.00",
+    "jamais_confirmees": 0
+  },
+  "integrite_garantie": true,
+  "controles": [
+    {
+      "nom": "Aucune commande confirmée n'a été perdue",
+      "ok": true,
+      "detail": "0 perdue(s) sur 4105 confirmées"
+    },
+    {
+      "nom": "Stock cohérent avec les ventes (aucune survente)",
+      "ok": true,
+      "detail": "4105 unités retirées du stock, 4105 vendues"
+    },
+    {
+      "nom": "Commandes = factures",
+      "ok": true,
+      "detail": "4105 commandes, 4105 factures"
+    },
+    {
+      "nom": "Montant facturé correct",
+      "ok": true,
+      "detail": "102625.00 (attendu 102625.00)"
+    },
+    {
+      "nom": "Stock jamais négatif",
+      "ok": true,
+      "detail": "minimum 99849"
+    }
+  ]
+}

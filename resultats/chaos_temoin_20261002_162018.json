@@ -1,0 +1,70 @@
+{
+  "parametres": {
+    "noeuds": "aucun",
+    "ouvriers": 16,
+    "duree": 100,
+    "kill_a": 20,
+    "redemarrer_a": 70,
+    "sans_redemarrage": false,
+    "produits_par_region": 8,
+    "garder": false
+  },
+  "evenements": [
+    {
+      "t": 20.0,
+      "evenement": "TEMOIN (aucune panne)"
+    }
+  ],
+  "clients": {
+    "confirmees": 2528,
+    "rejouees": 16,
+    "deja_enregistrees": 0,
+    "abandonnees": 0,
+    "erreurs_vues": 16,
+    "types_erreurs": {
+      "QueryCanceled 57014 query execution canceled due to statement timeout": 16
+    }
+  },
+  "disponibilite": {
+    "debit_avant": 31.4,
+    "debit_pendant": 19.3,
+    "debit_apres": 30.6,
+    "interruption_max_s": 13.9,
+    "retour_4_noeuds_s": 10
+  },
+  "base": {
+    "commandes": 2528,
+    "factures": 2528,
+    "quantite_vendue": 2528,
+    "montant": "63200.00",
+    "jamais_confirmees": 0
+  },
+  "integrite_garantie": true,
+  "controles": [
+    {
+      "nom": "Aucune commande confirmée n'a été perdue",
+      "ok": true,
+      "detail": "0 perdue(s) sur 2528 confirmées"
+    },
+    {
+      "nom": "Stock cohérent avec les ventes (aucune survente)",
+      "ok": true,
+      "detail": "2528 unités retirées du stock, 2528 vendues"
+    },
+    {
+      "nom": "Commandes = factures",
+      "ok": true,
+      "detail": "2528 commandes, 2528 factures"
+    },
+    {
+      "nom": "Montant facturé correct",
+      "ok": true,
+      "detail": "63200.00 (attendu 63200.00)"
+    },
+    {
+      "nom": "Stock jamais négatif",
+      "ok": true,
+      "detail": "minimum 99895"
+    }
+  ]
+}

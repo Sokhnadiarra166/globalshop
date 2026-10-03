@@ -1,0 +1,86 @@
+{
+  "parametres": {
+    "noeuds": "roach2,roach3",
+    "ouvriers": 16,
+    "duree": 70,
+    "kill_a": 15,
+    "redemarrer_a": 45,
+    "sans_redemarrage": false,
+    "produits_par_region": 8,
+    "garder": false
+  },
+  "evenements": [
+    {
+      "t": 19.2,
+      "evenement": "PANNE roach2"
+    },
+    {
+      "t": 23.5,
+      "evenement": "PANNE roach3"
+    },
+    {
+      "t": 46.0,
+      "evenement": "RETOUR roach2"
+    },
+    {
+      "t": 46.9,
+      "evenement": "RETOUR roach3"
+    }
+  ],
+  "clients": {
+    "confirmees": 252,
+    "rejouees": 16,
+    "deja_enregistrees": 0,
+    "abandonnees": 0,
+    "erreurs_vues": 771,
+    "types_erreurs": {
+      "OperationalError  connection to server at \"localhost\" (::1), port 26257 failed: server c": 649,
+      "OperationalError  connection to server at \"localhost\" (::1), port 26257 failed: could no": 72,
+      "OperationalError  connection to server at \"localhost\" (::1), port 26257 failed: timeout": 24,
+      "QueryCanceled 57014 query execution canceled due to statement timeout": 17,
+      "OperationalError  server closed the connection unexpectedly": 9
+    }
+  },
+  "disponibilite": {
+    "debit_avant": 10.0,
+    "debit_pendant": 0.9,
+    "debit_apres": 2.3,
+    "interruption_max_s": 48.5,
+    "retour_4_noeuds_s": 8
+  },
+  "base": {
+    "commandes": 252,
+    "factures": 252,
+    "quantite_vendue": 252,
+    "montant": "6300.00",
+    "jamais_confirmees": 0
+  },
+  "integrite_garantie": true,
+  "controles": [
+    {
+      "nom": "Aucune commande confirmée n'a été perdue",
+      "ok": true,
+      "detail": "0 perdue(s) sur 252 confirmées"
+    },
+    {
+      "nom": "Stock cohérent avec les ventes (aucune survente)",
+      "ok": true,
+      "detail": "252 unités retirées du stock, 252 vendues"
+    },
+    {
+      "nom": "Commandes = factures",
+      "ok": true,
+      "detail": "252 commandes, 252 factures"
+    },
+    {
+      "nom": "Montant facturé correct",
+      "ok": true,
+      "detail": "6300.00 (attendu 6300.00)"
+    },
+    {
+      "nom": "Stock jamais négatif",
+      "ok": true,
+      "detail": "minimum 99988"
+    }
+  ]
+}

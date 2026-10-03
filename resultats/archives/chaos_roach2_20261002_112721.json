@@ -1,0 +1,77 @@
+{
+  "parametres": {
+    "noeuds": "roach2",
+    "ouvriers": 16,
+    "duree": 100,
+    "kill_a": 20,
+    "redemarrer_a": 70,
+    "sans_redemarrage": false,
+    "produits_par_region": 8,
+    "garder": false
+  },
+  "evenements": [
+    {
+      "t": 20.0,
+      "evenement": "PANNE roach2"
+    },
+    {
+      "t": 70.0,
+      "evenement": "RETOUR roach2"
+    }
+  ],
+  "clients": {
+    "confirmees": 2365,
+    "rejouees": 7,
+    "deja_enregistrees": 0,
+    "abandonnees": 16,
+    "erreurs_vues": 28,
+    "types_erreurs": {
+      "OperationalError  server closed the connection unexpectedly": 21,
+      "QueryCanceled 57014 query execution canceled due to statement timeout": 5,
+      "OperationalError  connection to server at \"localhost\" (::1), port 26257 failed: server c": 1,
+      "OperationalError  connection to server at \"localhost\" (::1), port 26257 failed: timeout": 1
+    }
+  },
+  "disponibilite": {
+    "debit_avant": 5.2,
+    "debit_pendant": 38.3,
+    "debit_apres": 11.5,
+    "interruption_max_s": 5.9,
+    "retour_4_noeuds_s": null
+  },
+  "base": {
+    "commandes": 2365,
+    "factures": 2365,
+    "quantite_vendue": 2365,
+    "montant": "59125.00",
+    "jamais_confirmees": 0
+  },
+  "integrite_garantie": true,
+  "controles": [
+    {
+      "nom": "Aucune commande confirmée n'a été perdue",
+      "ok": true,
+      "detail": "0 perdue(s) sur 2365 confirmées"
+    },
+    {
+      "nom": "Stock cohérent avec les ventes (aucune survente)",
+      "ok": true,
+      "detail": "2365 unités retirées du stock, 2365 vendues"
+    },
+    {
+      "nom": "Commandes = factures",
+      "ok": true,
+      "detail": "2365 commandes, 2365 factures"
+    },
+    {
+      "nom": "Montant facturé correct",
+      "ok": true,
+      "detail": "59125.00 (attendu 59125.00)"
+    },
+    {
+      "nom": "Stock jamais négatif",
+      "ok": true,
+      "detail": "minimum 99896"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "parametres": {
+    "noeuds": "aucun",
+    "ouvriers": 16,
+    "duree": 100,
+    "kill_a": 20,
+    "redemarrer_a": 70,
+    "sans_redemarrage": false,
+    "produits_par_region": 8,
+    "garder": false
+  },
+  "evenements": [
+    {
+      "t": 20.0,
+      "evenement": "TEMOIN (aucune panne)"
+    }
+  ],
+  "clients": {
+    "confirmees": 2267,
+    "rejouees": 0,
+    "deja_enregistrees": 0,
+    "abandonnees": 0,
+    "erreurs_vues": 0,
+    "types_erreurs": {}
+  },
+  "disponibilite": {
+    "debit_avant": 24.1,
+    "debit_pendant": 22.9,
+    "debit_apres": 20.8,
+    "interruption_max_s": 3.3,
+    "retour_4_noeuds_s": null
+  },
+  "base": {
+    "commandes": 2267,
+    "factures": 2267,
+    "quantite_vendue": 2267,
+    "montant": "56675.00",
+    "jamais_confirmees": 0
+  },
+  "integrite_garantie": true,
+  "controles": [
+    {
+      "nom": "Aucune commande confirmée n'a été perdue",
+      "ok": true,
+      "detail": "0 perdue(s) sur 2267 confirmées"
+    },
+    {
+      "nom": "Stock cohérent avec les ventes (aucune survente)",
+      "ok": true,
+      "detail": "2267 unités retirées du stock, 2267 vendues"
+    },
+    {
+      "nom": "Commandes = factures",
+      "ok": true,
+      "detail": "2267 commandes, 2267 factures"
+    },
+    {
+      "nom": "Montant facturé correct",
+      "ok": true,
+      "detail": "56675.00 (attendu 56675.00)"
+    },
+    {
+      "nom": "Stock jamais négatif",
+      "ok": true,
+      "detail": "minimum 99919"
+    }
+  ]
+}
